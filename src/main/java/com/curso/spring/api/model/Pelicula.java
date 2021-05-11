@@ -12,8 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.ToString;
+
 @Entity
 @Table(name = "pelicula", schema = "administracion")
+@ToString
 public class Pelicula {
 
 	@Id
@@ -34,7 +37,7 @@ public class Pelicula {
 	private BigDecimal precioRenta;
 	@Column
 	private Integer existencia;
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
 	private CategoriaPelicula categoria;
 	
@@ -86,4 +89,5 @@ public class Pelicula {
 	public void setExistencia(Integer existencia) {
 		this.existencia = existencia;
 	}
+	
 }
