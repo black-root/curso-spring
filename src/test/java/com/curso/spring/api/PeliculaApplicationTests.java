@@ -25,9 +25,12 @@ class PeliculaApplicationTests {
 		usuario.setEmail("ronald.ibanez1994@gmail.com");
 		usuario.setPassword(encoder.encode("admin"));
 		Usuario response = usuarioRepository.save(usuario);
-		
+
+		Usuario usuario2 = new Usuario();
+		usuario2.setEmail("admin");
+		usuario2.setPassword(encoder.encode("admin"));
+		usuarioRepository.save(usuario2);
 		assertTrue(response.getPassword().equalsIgnoreCase(usuario.getPassword()));
 	}
-	
 
 }
