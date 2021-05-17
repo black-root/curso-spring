@@ -23,7 +23,7 @@ class PeliculaApplicationTests {
 	void crearUsuarioTest() {
 		Usuario usuario = new Usuario();
 		usuario.setEmail("ronald.ibanez1994@gmail.com");
-		usuario.setPassword(encoder.encode("admin"));
+		usuario.setPassword(encoder.encode("1234"));
 		Usuario response = usuarioRepository.save(usuario);
 
 		Usuario usuario2 = new Usuario();

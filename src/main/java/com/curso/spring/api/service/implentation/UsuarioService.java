@@ -12,11 +12,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.curso.spring.api.config.ApplicationUserRoles;
 import com.curso.spring.api.exception.NotFoundException;
 import com.curso.spring.api.model.Usuario;
 import com.curso.spring.api.repository.UsuarioRepository;
 
+import lombok.extern.log4j.Log4j2;
+
 @Service
+@Log4j2
 public class UsuarioService implements UserDetailsService{
 
 	@Autowired
@@ -28,10 +32,19 @@ public class UsuarioService implements UserDetailsService{
 		Usuario usuario = this.usuarioRepository.findByEmail(username).orElseThrow(
 				()-> new NotFoundException("usuario no encontrado"));
 		
-		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
-		roles.add(new SimpleGrantedAuthority("ADMIN"));
-		User userDetails = new User
-				(usuario.getEmail(), usuario.getPassword(), roles);
+		/*
+		 * List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
+		 * roles.add(new SimpleGrantedAuthority("ADMIN")); User userDetails = new User
+		 * (usuario.getEmail(), usuario.getPassword(), roles);
+		 */
+		
+		UserDetails userDetails = User.builder()
+				.username(usuario.getEmail())
+				.password(usuario.getPassword())
+				.roles(ApplicationUserRoles.ADMIN.name())
+				.build();
+		
+		log.info("user "+userDetails.toString());
 		return userDetails;
 	}
 

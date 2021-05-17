@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(10);
 		return bCryptPasswordEncoder;
 	}
 
@@ -33,6 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
+		http
+			.csrf().disable()
+			.authorizeRequests()
+			.antMatchers("/","index","/css/*","/js/*").permitAll()
+			.antMatchers("/movie-gallery/api/**").hasRole(ApplicationUserRoles.ADMIN.name())
+			.anyRequest()
+				.authenticated()
+				.and().httpBasic();
 	}
 }
