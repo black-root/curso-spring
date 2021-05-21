@@ -2,6 +2,8 @@ package com.curso.spring.api.dto;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.Pattern;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class PeliculaDto {
 
 	private Long idPelicula;
+	@Pattern(regexp = "[\\D]+", message = "Solo se permite letras")
 	private String titulo;
 	private String descripcion;
 	private String sinopsis;

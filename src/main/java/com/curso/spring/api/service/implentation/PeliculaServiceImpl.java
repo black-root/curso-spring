@@ -18,6 +18,7 @@ import com.curso.spring.api.dto.PeliculaDto;
 import com.curso.spring.api.model.Pelicula;
 import com.curso.spring.api.repository.PeliculaRepository;
 import com.curso.spring.api.service.PeliculaService;
+import com.curso.spring.api.utils.ValidateService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +31,9 @@ public class PeliculaServiceImpl implements PeliculaService{
 	private PeliculaRepository peliculaRepository;
 	
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private ValidateService validate;
 	
 	@Override
 	public List<PeliculaDto> findAllList() {
@@ -50,6 +54,7 @@ public class PeliculaServiceImpl implements PeliculaService{
 	
 	@Override
 	public PeliculaDto save(PeliculaDto request) {
+		this.validate.validate(request);
 		this.modelMapper = new ModelMapper();
 		Pelicula pelicula = modelMapper.map(request, Pelicula.class);
 		log.info("pelicula "+pelicula);
